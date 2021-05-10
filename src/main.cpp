@@ -40,7 +40,7 @@ SSD1306AsciiWire oled_ssd1306_display;
 #define RFM95_RST 14
 #define RFM95_INT 2
 
-#define RF95_FREQ 868.0
+#define RF95_FREQ ( 868.0F )
 
 RH_RF95 rf95(RFM95_CS, RFM95_INT);
 
@@ -150,9 +150,13 @@ void RFM95_RX_init(void)
     }
   }
 
-  Serial.print("Set Freq to: ");
+  Serial.print("Freq: ");
   Serial.println(RF95_FREQ);
   rf95.setTxPower(23, false);
+  rf95.setSpreadingFactor(7);
+  rf95.setSignalBandwidth(125E3);
+  rf95.setPayloadCRC(false);
+  rf95.setPreambleLength(8);
   oled_ssd1306_display.print("Set Freq to: ");
   oled_ssd1306_display.println(RF95_FREQ);
   Serial.println("RFM95 init done");
